@@ -1,5 +1,4 @@
-import re
-import subprocess
+import json
 import simplejson
 import socket
 
@@ -43,14 +42,13 @@ class SocketListener:
             print(command)
 
 
-ip_forward_stat = subprocess.check_output(["cat", "/proc/sys/net/ipv4/ip_forward"]).decode()
-if int(ip_forward_stat) == 0:
-    subprocess.run(["sysctl", "-w", "net.ipv4.ip_forward=1"], stdout=subprocess.DEVNULL)
+connect_info = ""
+with open("logs/variable_logs.txt", "r") as f:
+    for line in f:
+        pass
+    connect_info = line
 
-if_config = subprocess.check_output(["ifconfig", "wlan0"]).decode()
-ip_addr = re.search(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", if_config)
-if ip_addr:
-    socket_listener = SocketListener(ip_addr.group(0), 8080)
-    socket_listener.start_listener()
-else:
-    print("Error! You must use wifi adapter in your virtual machine")
+connect_info = json.loads(connect_info.split(" ")[-1].replace("'", "\""))
+
+socket_listener = SocketListener(connect_info["LHOST"], connect_info["LPORT"])
+socket_listener.start_listener()
