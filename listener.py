@@ -1,6 +1,5 @@
 import re
 import subprocess
-
 import simplejson
 import socket
 
@@ -44,11 +43,12 @@ class SocketListener:
             print(command)
 
 
-ip_forward_stat = subprocess.run(["cat" + "/proc/sys/net/ipv4/ip_forward"], check=True, capture_output=True, text=True).stdout
-print(ip_forward_stat)
+ip_forward_stat = subprocess.check_output(["cat", "/proc/sys/net/ipv4/ip_forward"]).decode()
+if int(ip_forward_stat) == 0:
+    subprocess.run(["sysctl", "-w", "net.ipv4.ip_forward=1"], stdout=subprocess.DEVNULL)
 
-if_config = subprocess.check_output(["ifconfig", "wlan0"])
-ip_addr = re.search(r"\w\w\w.\w\w\w.\w.\w\w", if_config)
+if_config = subprocess.check_output(["ifconfig", "wlan0"]).decode()
+ip_addr = re.search(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", if_config)
 if ip_addr:
     socket_listener = SocketListener(ip_addr.group(0), 8080)
     socket_listener.start_listener()
