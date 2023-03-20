@@ -1,6 +1,6 @@
+import subprocess
 import simplejson
 import socket
-import subprocess
 
 
 class Socket:
@@ -36,8 +36,7 @@ class Socket:
         self.connection.close()
 
 
-hostname = socket.gethostname()
-IPAddr = socket.gethostbyname(hostname)
-
-my_socket = Socket(IPAddr, 8080)
+IPAddr = ""
+Port = 8080
+my_socket = Socket(IPAddr, Port)
 my_socket.start_socket()
