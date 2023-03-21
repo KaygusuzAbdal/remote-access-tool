@@ -83,7 +83,7 @@ try:
 except Exception:
     user_choice = input("You must install 'pyinstaller' module. Do you want me to install it for you ? (Y/n)")
     if user_choice == "" or user_choice.lower() == "y":
-        subprocess.run(["python", "-m", "pip", "install", "pyinstaller"])
+        subprocess.run(["python3", "-m", "pip", "install", "pyinstaller"])
         if file_name == "" and (added_file_name is not None or not added_file_name == ""):
             subprocess.run(["pyinstaller", "socket_file.py", "--onefile", "--add-data", "\"{}.\"".format(file_path)],
                            stdout=subprocess.DEVNULL)
