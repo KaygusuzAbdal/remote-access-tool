@@ -50,12 +50,20 @@ with open("socket_file.py", "r") as sc:
         if "my_socket" in line:
             break
         count += 1
-    if added_file_name is not None or not added_file_name == "":
+    if added_file_name == "":
+        check_if_opens = False
+        for line in lines:
+            if "open_added_file()" in line and "def" not in line:
+                check_if_opens = True
+                break
+            file_count += 1
+        if check_if_opens:
+            lines[file_count] = "\n"
+    else:
         for line in lines:
             if "added_file_path" in line:
                 break
             file_count += 1
-        print(lines[file_count])
         lines[file_count] = """    added_file_path = sys._MEIPASS + "\\\{}"\n""".format(added_file_name)
         lines[file_count + 1] = """    subprocess.Popen(added_file_path, shell=True)\n"""
         lines[file_count + 4] = """open_added_file()\n"""
