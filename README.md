@@ -10,9 +10,9 @@ python3 KARat.py
 ```
 
 ### Parameters:
-- RHOST : IP of the handler. It can be your public IP Address or something like '0.tcp.ngrok.io' if you're using ngrok.
+- RHOST : IP of the handler. It can be your public IP Address or something like `0.tcp.ngrok.io` if you're using ngrok.
 - RPORT : Port of the handler.
-- LHOST : The local listener hostname. It can be your virtual machine's local ip address or '0.0.0.0' if you're using ngrok. (Be sure that your virtual machine is **directly** connected to the modem)
+- LHOST : The local listener hostname. It can be your virtual machine's local ip address or `0.0.0.0` if you're using ngrok. (Be sure that your virtual machine is **directly** connected to the modem)
 - LPORT : The local listener port.
 
 You can also change the executable's name and add a fake file into it.
