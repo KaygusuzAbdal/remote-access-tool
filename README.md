@@ -3,7 +3,7 @@ Simple TROJAN project. Provides access a device remotely. It can hide itself in 
 
 ## Usage:
 
-1. You should start the program as calling the KARat.py file.
+1. You should start the program as calling the `KARat.py` file.
 
 ```
 python3 KARat.py
