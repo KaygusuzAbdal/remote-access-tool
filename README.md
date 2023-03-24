@@ -23,5 +23,5 @@ You can also change the executable's name and add a fake file into it.
 python3 listener.py
 ```
 
-After these, you have to get your victim to run the executable file. When you do it, executable will hide itself and still be working if victim restart his computer.
+After these, you have to bait your victim to run the executable file. When you do it, executable will hide itself and still be working if victim restart his computer.
 
