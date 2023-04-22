@@ -17,7 +17,7 @@ python3 KARat.py
 
 You can also change the executable's name and add a fake file into it.
 
-2. After the parameters, the executable will be generated into "dist" folder. Now, you can start your listener with using the code below.
+2. After entering the parameters, the executable will be generated into "dist" folder. Now, you can start your listener with using the code below.
 
 ```
 python3 listener.py
