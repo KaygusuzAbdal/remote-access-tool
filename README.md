@@ -1,5 +1,5 @@
 # remote-access-tool
-Simple TROJAN project. Provides access a device remotely. It can hide itself in target's computer and still works if computer restarted. (Educational purposes only)
+Provides access a device remotely. It can hide itself in target's computer and still works if computer restarted. (written for Red Team activities)
 
 ## Usage:
 
