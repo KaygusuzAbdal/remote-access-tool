@@ -15,7 +15,13 @@ if RPORT == "":
     RPORT = 8080
 
 default_lhost = ""
-if_config = subprocess.check_output(["ifconfig", "wlan0"]).decode()
+
+wlan0 = subprocess.call(["ifconfig", "wlan0"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+if wlan0 == 1:
+    if_config = subprocess.check_output(["ifconfig", "eth0"]).decode()
+else:
+    if_config = subprocess.check_output(["ifconfig", "wlan0"]).decode()
+
 ip_addr = re.search(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", if_config)
 if ip_addr:
     default_lhost = "(" + ip_addr.group(0) + ")"
